@@ -15,12 +15,32 @@ class Question < ApplicationRecord
     validates :title, uniqueness: {scope: :body }
     validates :view_count, numericality: {greater_than_or_equal_to: 0}
     
-    # .new
+    # Scopes
+    # Create a scope with a class method
+    # https://edgeguides.rubyonrails.org/active_record_querying.html#scopes
+
+    # def self.recent
+    #     order(created_at: :desc).limit(10)
+    # end
+
+    # Scopes are such a commonly used feature, that
+    # there's another way to create them quicker. It 
+    # takes a name and a lambda as a callback
+
     # def self.recent_ten
     #     order("created_at DESC").limit(10)
     # end
     # Converting above method into a lambda
     scope :recent_ten,lambda{order("created_at DESC").limit(10)}
+
+    # Exercise:
+    # def self.search(query)
+    #     where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%")
+    # end
+
+    # Equivalent to:
+    scope(:search, -> (query){ where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%") })
+
 
     private
     def capitalize_title
