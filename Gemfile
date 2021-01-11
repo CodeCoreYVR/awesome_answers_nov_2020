@@ -43,6 +43,7 @@ group :development do
   gem 'spring'
   gem 'cowsay', '~> 0.3.0'
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+gem 'hirb'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
