@@ -14,6 +14,9 @@ class Question < ApplicationRecord
     validates :body , length:{minimum: 2, maximum: 10}
     validates :title, uniqueness: {scope: :body }
     validates :view_count, numericality: {greater_than_or_equal_to: 0}
+    validate :no_monkey # 👈🏻 we were missing this 😁 😇
+    # 👆🏻 The method for custom validations is singular
+    # unlike the 'validates' method for regular validations
     
     # Scopes
     # Create a scope with a class method
