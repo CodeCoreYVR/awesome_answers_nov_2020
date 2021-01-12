@@ -11,7 +11,7 @@ class Question < ApplicationRecord
     # https://guides.rubyonrails.org/active_record_validations.html
     validates :title, presence: {message: 'must be provided'},uniqueness: true
     # validates :title, uniqueness: true
-    validates :body , length:{minimum: 2, maximum: 10}
+    validates :body , length:{minimum: 2, maximum: 200}
     validates :title, uniqueness: {scope: :body }
     validates :view_count, numericality: {greater_than_or_equal_to: 0}
     validate :no_monkey # 👈🏻 we were missing this 😁 😇
