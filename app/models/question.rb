@@ -7,6 +7,9 @@ class Question < ApplicationRecord
     # - A column name as a symbol 
     # - Named arguments, corresponding to the validation rules
 
+    # ASSOCIATION WITH ANSWER MODEL
+    has_many :answers, dependent: :destroy # in case of delete
+
     # To read more on validations, go to:
     # https://guides.rubyonrails.org/active_record_validations.html
     validates :title, presence: {message: 'must be provided'},uniqueness: true

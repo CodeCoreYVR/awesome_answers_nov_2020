@@ -6,7 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Question.destroy_all
+Answer.delete_all
+Question.delete_all
 
 200.times do
      created_at=Faker::Date.backward(days: 365*5)
@@ -18,11 +19,18 @@ Question.destroy_all
         updated_at: created_at
     )
 # puts q.errors.full_messages
+    if q.valid?
+        q.answers = rand(0..15).times.map do 
+            Answer.new(body: Faker::GreekPhilosophers.quote )
+        end
+    end
 end
 
 question=Question.all
+answer=Answer.all
 
 puts Cowsay.say("Generated #{question.count} questions.",:frogs)
+puts Cowsay.say("Generated #{answer.count} answers.",:tux)
 
 
 # Some terminal commands to delete create and run migration and seed files
