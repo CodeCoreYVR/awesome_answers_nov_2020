@@ -13,6 +13,8 @@ class QuestionsController < ApplicationController
 
     def show
         # puts params[:id]
+        @answers=@question.answers.order(created_at: :desc)
+        @answer=Answer.new
     end
     # Create destroy method
     # creating a link for destroy

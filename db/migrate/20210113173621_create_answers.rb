@@ -9,7 +9,7 @@ class CreateAnswers < ActiveRecord::Migration[6.1]
       # t.references :question, null: false, foreign_key: true
       t.references :question, foreign_key: true
 
-      # Prevent you from adding an answer whose question_it doesnt 
+      # Prevent you from adding an answer whose question_id doesnt 
       # exsist
       
       # dependent: :destroy

@@ -6,6 +6,9 @@ class Answer < ApplicationRecord
   # This is autmatically added to a model when we use references :question
   # it generates a validation something like this 👇🏻:
   # validates :question_id, presence: true # but this is hidden from us
+  # validates :body, presence: true
+  validates :body, presence: {message: " should be present."}
+
 end
 =begin
 
