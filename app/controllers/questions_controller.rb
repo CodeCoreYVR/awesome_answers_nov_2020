@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
     before_action :find_question, only:[:show, :edit, :update, :destroy]
+    before_action :authorize_user!,only:[:edit,:update,:destroy]
+
 
     # 1. Create Index method
     # 2. Create view for it in views/questions index.html.erb
@@ -69,6 +71,9 @@ class QuestionsController < ApplicationController
     def question_params
         params.require(:question).permit(:title, :body)
     # permit specifies all the input names that are allowes as symbol
+    end
+    def authorize_user!
+        redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @question)
     end
 
 
