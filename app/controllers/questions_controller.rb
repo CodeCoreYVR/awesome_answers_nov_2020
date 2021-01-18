@@ -58,6 +58,7 @@ class QuestionsController < ApplicationController
     def update
         if @question.update question_params
             redirect_to question_path(@question.id), notice: "Question edited successfully."
+            
         else
             render :edit
         end
