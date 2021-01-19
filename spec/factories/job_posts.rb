@@ -9,6 +9,8 @@ FactoryBot.define do
     max_salary{rand(200_000..400_000)}
     
   end
+  
+
 end
 
 
