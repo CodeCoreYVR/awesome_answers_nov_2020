@@ -1,5 +1,5 @@
 class JobPostsController < ApplicationController
-    before_action :find_job_post,only:[:show,:update]
+    before_action :find_job_post,only:[:show,:update, :destroy]
     def new
         @job_post=JobPost.new
     end
@@ -38,6 +38,12 @@ class JobPostsController < ApplicationController
             :location)
             redirect_to @job_post
         end
+    end
+    def destroy
+        
+        @job_post.destroy
+        flash[:danger]= 'deleted job post'
+        redirect_to job_posts_path
     end
     private
     def find_job_post
