@@ -40,6 +40,6 @@ Rails.application.routes.draw do
   # There will be no index routes and no route will have an :id wildcard
   # Even with singular resource controller will still be plural.
 
-  resources :job_posts, only: [:new,:create, :show, :index]
+  resources :job_posts, only: [:new,:create, :show, :index, :edit]
 
 end
