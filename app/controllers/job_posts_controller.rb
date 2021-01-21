@@ -1,5 +1,5 @@
 class JobPostsController < ApplicationController
-    before_action :authenticate_user!,only: [:create]
+    before_action :authenticate_user!, except:[:index,:show]
     before_action :find_job_post,only:[:show,:update, :destroy]
     def new
         @job_post=JobPost.new
