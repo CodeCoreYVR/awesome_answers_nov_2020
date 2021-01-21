@@ -2,6 +2,8 @@ class User < ApplicationRecord
     has_many :questions, dependent: :nullify
     has_many :answers, dependent: :nullify
 
+    has_many :job_posts, dependent: :nullify
+
     has_secure_password
     # Provide user authentication feature on the model that it is called in
     # It requires a password_digest as a column in db and a gem bcrypt as well
