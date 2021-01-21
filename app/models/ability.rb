@@ -46,7 +46,9 @@ class Ability
     can(:crud,Answer) do |answer|
       user==answer.user
     end
-
+    can(:crud, JobPost) do |job_post|
+      user==job_post.user
+    end
 
   end
 end

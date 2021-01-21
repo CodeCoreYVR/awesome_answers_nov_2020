@@ -43,10 +43,14 @@ class JobPostsController < ApplicationController
         end
     end
     def destroy
-        
-        @job_post.destroy
-        flash[:danger]= 'deleted job post'
-        redirect_to job_posts_path
+        if can?(:delete,@job_post)
+            @job_post.destroy
+            flash[:danger]= 'deleted job post'
+            redirect_to job_posts_path
+        else
+            flash[:danger]="Access Denied"
+            redirect_to job_post_url(@job_post)
+        end
     end
     private
     def find_job_post

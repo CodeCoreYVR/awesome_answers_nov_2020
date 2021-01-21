@@ -185,23 +185,40 @@ RSpec.describe JobPostsController, type: :controller do
     end# 👈🏻 describe 'update' ends here 
     describe '#destroy' do
         context "with signed in user" do
-            before do
-                #given
-                session[:user_id]=FactoryBot.create(:user)
-                @job_post=FactoryBot.create(:job_post)
-                #when
-                delete(:destroy, params:{id: @job_post.id})
+            context 'as owner' do
+                before do
+                    #given
+                    # As given we have already created rights / ability in ability.rb
+                    # Here we need a user who is also an owner of the job_post 
+                    # so he can delete that job_pos
+                    current_user=FactoryBot.create(:user)
+                    session[:user_id]=current_user.id
+                    @job_post=FactoryBot.create(:job_post, user: current_user)
+                    #when
+                    delete(:destroy, params:{id: @job_post.id})
+                end
+                it 'remove job post from the db' do
+                    #then 
+                    expect(JobPost.find_by(id: @job_post.id)).to(be(nil))
+                end
+                it 'redirect to the job post index' do
+                    expect(response).to redirect_to(job_posts_path)
+                end
+                it 'set a flash message' do
+                    expect(flash[:danger]).to be
+                end 
             end
-            it 'remove job post from the db' do
-                #then 
-                expect(JobPost.find_by(id: @job_post.id)).to(be(nil))
+            context "as non owner" do
+                before do
+                    current_user = FactoryBot.create(:user)
+                    session[:user_id]=current_user.id
+                    @job_post=FactoryBot.create(:job_post)
+                end
+                it 'does not remove the job post' do
+                    delete(:destroy,params:{id: @job_post.id})
+                    expect(JobPost.find(@job_post.id)).to eq(@job_post)
+                end
             end
-            it 'redirect to the job post index' do
-                expect(response).to redirect_to(job_posts_path)
-            end
-            it 'set a flash message' do
-                expect(flash[:danger]).to be
-            end 
         end
     end
 end
