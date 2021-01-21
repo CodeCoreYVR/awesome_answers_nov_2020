@@ -1,6 +1,7 @@
 class JobPostsController < ApplicationController
     before_action :authenticate_user!, except:[:index,:show]
     before_action :find_job_post,only:[:show,:update, :destroy, :edit]
+    
     def new
         @job_post=JobPost.new
     end
@@ -61,4 +62,5 @@ class JobPostsController < ApplicationController
             :company_name,
             :location)
     end
+    
 end
