@@ -1,4 +1,5 @@
 class JobPostsController < ApplicationController
+    before_action :authenticate_user!,only: [:create]
     before_action :find_job_post,only:[:show,:update, :destroy]
     def new
         @job_post=JobPost.new
@@ -12,9 +13,11 @@ class JobPostsController < ApplicationController
             :max_salary,
             :company_name,
             :location)
+        @job_post.user=current_user
         if @job_post.save
             redirect_to job_post_path(@job_post)
         else
+            # byebug
             render :new
         end
     end

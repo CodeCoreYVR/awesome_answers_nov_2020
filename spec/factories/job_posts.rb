@@ -7,7 +7,7 @@ FactoryBot.define do
     location{Faker::Address.city}
     min_salary{rand(80_000..200_000)}
     max_salary{rand(200_000..400_000)}
-    
+    association(:user, factory: :user)
   end
   
 

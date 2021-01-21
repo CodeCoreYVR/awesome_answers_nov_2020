@@ -24,54 +24,68 @@ RSpec.describe JobPostsController, type: :controller do
         end 
     end# 👈🏻 describe 'new' ends  here 
     describe '#create' do# 👈🏻 describe 'create' starts here 
-        context " with valid parameter " do # 👈🏻 Context Valid Parameters - Start
-            
-            def valid_request
-                post(:create, params:{job_post: FactoryBot.attributes_for(:job_post)})
+        def valid_request
+            post(:create, params:{job_post: FactoryBot.attributes_for(:job_post)})
+        end
+        context 'with user signed in' do
+            before do
+                session[:user_id]=FactoryBot.create(:user)
             end
-            it 'creates a job post in the database' do
-                # Given
-                count_before = JobPost.count
-                # When
+            context " with valid parameter " do # 👈🏻 Context Valid Parameters - Start
+                it 'creates a job post in the database' do
+                    # Given
+                    count_before = JobPost.count
+                    # When
+                    valid_request
+                    
+                    # job_post:{
+                    #     title: 'senior dev',
+                    #     description: 'lots of pay',
+                    #     location: 'remote',
+                    #     min_salary:500_000,
+                    #     max_salary:1_000_000
+                    # }
+                    #Then
+                    count_after=JobPost.count
+                    expect(count_after).to(eq(count_before + 1))
+                end
+                it 'redirects us to a show page of that post' do
+                    # Given
+                    # When
+                    valid_request
+                    
+                    # Then 
+                    job_post=JobPost.last
+                    expect(response).to(redirect_to(job_post_url(job_post.id)))
+                end
+            end# 👈🏻 Context Valid Parameters - End
+            context 'with invalid parameters' do
+                def invalid_request
+                    post(:create, params:{job_post: FactoryBot.attributes_for(:job_post, title: nil)})
+                end
+                it 'doesnot save a record in the database'do
+                    count_before = JobPost.count
+                    invalid_request
+                    count_after = JobPost.count
+                    expect(count_after).to(eq(count_before))
+                end
+                it 'renders the new template' do
+                    # Given
+                    # when
+                    invalid_request
+                    #then
+                    expect(response).to render_template(:new)
+                end
+            end
+        end# 👈🏻 context 'with user signed in' ends here
+        context 'with user not signed in'do
+            it 'should redirect to sign in page' do
+                #given
+                # User is not signed 
+                #when
                 valid_request
-                
-                # job_post:{
-                #     title: 'senior dev',
-                #     description: 'lots of pay',
-                #     location: 'remote',
-                #     min_salary:500_000,
-                #     max_salary:1_000_000
-                # }
-                #Then
-                count_after=JobPost.count
-                expect(count_after).to(eq(count_before + 1))
-            end
-            it 'redirects us to a show page of that post' do
-                # Given
-                # When
-                valid_request
-                
-                # Then 
-                job_post=JobPost.last
-                expect(response).to(redirect_to(job_post_url(job_post.id)))
-            end
-        end# 👈🏻 Context Valid Parameters - End
-        context 'with invalid parameters' do
-            def invalid_request
-                post(:create, params:{job_post: FactoryBot.attributes_for(:job_post, title: nil)})
-            end
-            it 'doesnot save a record in the database'do
-                count_before = JobPost.count
-                invalid_request
-                count_after = JobPost.count
-                expect(count_after).to(eq(count_before))
-            end
-            it 'renders the new template' do
-                # Given
-                # when
-                invalid_request
                 #then
-                expect(response).to render_template(:new)
+                expect(response).to redirect_to(new_session_path)
             end
         end
     end# 👈🏻 describe 'create' ends here 
