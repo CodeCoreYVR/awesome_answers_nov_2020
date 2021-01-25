@@ -63,7 +63,11 @@ class Question < ApplicationRecord
 
     # Equivalent to:
     scope(:search, -> (query){ where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%") })
-
+    def self.all_with_answer_counts
+        self.left_outer_joins(:answers)
+            .select("questions.*","Count(answers.*) AS answers_count")
+            .group('questions.id')
+    end
 
     private
     def capitalize_title
