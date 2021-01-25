@@ -11,6 +11,17 @@ class Question < ApplicationRecord
     has_many :answers, dependent: :destroy # in case of delete
     # ASSOCIATION WITH USER MODEL
     belongs_to :user, optional: true
+
+    has_and_belongs_to_many(
+        :likes,
+        {
+            class_name: 'User',
+            join_table: 'likes',
+            association_foreign_key: 'user_id',
+            foreign_key: 'question_id'
+
+        }
+    )
     # To read more on validations, go to:
     # https://guides.rubyonrails.org/active_record_validations.html
     validates :title, presence: {message: 'must be provided'},uniqueness: true
