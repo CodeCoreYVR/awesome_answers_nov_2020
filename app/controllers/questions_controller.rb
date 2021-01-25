@@ -10,6 +10,10 @@ class QuestionsController < ApplicationController
     def index
         @questions=Question.all.order(created_at: :desc)
     end
+    def liked
+        @questions= current_user.liked_questions.order(created_at: :desc)
+    end
+
     # 1. Create show method
     # 2. Create view for it in views/questions show.html.erb
     # 3. Wiring every thing together with a route
@@ -64,7 +68,7 @@ class QuestionsController < ApplicationController
             render :edit
         end
     end
-
+   
 
     private
     def find_question

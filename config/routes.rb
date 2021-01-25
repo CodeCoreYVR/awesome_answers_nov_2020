@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   # PascalCase
   resources :questions do
     resources :likes, shallow: true, only: [:create, :destroy]
+
+    get :liked, on: :collection
     # All the resources in this block will be prefixed by this👇🏻
     # /questions/:question_id 
     # So we can now grab question_id from params like params[:question_id]
