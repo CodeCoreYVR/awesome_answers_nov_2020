@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   # It assumes that there will be a contoller name as a first argument, pluralized and PascalCase
   # PascalCase
   resources :questions do
+    resources :likes, shallow: true, only: [:create, :destroy]
     # All the resources in this block will be prefixed by this👇🏻
     # /questions/:question_id 
     # So we can now grab question_id from params like params[:question_id]

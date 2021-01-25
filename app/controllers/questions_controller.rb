@@ -18,6 +18,7 @@ class QuestionsController < ApplicationController
         # puts params[:id]
         @answers=@question.answers.order(created_at: :desc)
         @answer=Answer.new
+        @like=@question.likes.find_by(user: current_user)
     end
     # Create destroy method
     # creating a link for destroy
