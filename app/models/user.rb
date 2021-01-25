@@ -3,16 +3,21 @@ class User < ApplicationRecord
     has_many :answers, dependent: :nullify
 
     has_many :job_posts, dependent: :nullify
-    has_and_belongs_to_many(
-        :liked_questions, # This is a name of association
-        {
-            class_name: 'Question', # This is the name of the model which we are associating to
-            join_table: 'likes', # This is the name of the join table 
-            association_foreign_key: 'question_id', # this is the name of the key that will act as a foreign key
-            foreign_key: 'user_id'
+    # many to many association
+    has_many :likes
+    has_many :liked_questions, through: :likes, source: :question
 
-        }
-    )
+
+    # has_and_belongs_to_many(
+    #     :liked_questions, # This is a name of association
+    #     {
+    #         class_name: 'Question', # This is the name of the model which we are associating to
+    #         join_table: 'likes', # This is the name of the join table 
+    #         association_foreign_key: 'question_id', # this is the name of the key that will act as a foreign key
+    #         foreign_key: 'user_id'
+
+    #     }
+    # )
     # Docs:
     # has_and_belongs_to_many(name, scope=nil, {options},&extension)
     # The options are as follows:
