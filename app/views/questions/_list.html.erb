@@ -1,3 +1,9 @@
+<% if @tag.present?  %>
+<h2>Showing Question tagged by:</h2>
+<%= @tag.name  %> 
+
+<% end %>  
+
 
 <% @questions.each do |question|%>
 <div>

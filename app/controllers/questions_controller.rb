@@ -8,8 +8,14 @@ class QuestionsController < ApplicationController
     # 2. Create view for it in views/questions index.html.erb
     # 3. Wiring every thing together with a route
     def index
+        # puts params[:tag]
+        if params[:tag]
+            @tag=Tag.find_or_initialize_by(name: params[:tag])
+            @questions = @tag.questions.all_with_answer_counts.order(updated_at: :desc)
+        else
         # @questions=Question.all.order(created_at: :desc)
             @questions = Question.all.all_with_answer_counts.order(updated_at: :desc)
+        end
     end
     def liked
         # @questions= current_user.liked_questions.order(created_at: :desc)
