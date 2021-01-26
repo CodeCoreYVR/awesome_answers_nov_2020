@@ -17,6 +17,12 @@ class Question < ApplicationRecord
     has_many :likers, through: :likes  , source: :user
     # has_many :likes, through: :likes # , source: :user
 
+    has_many :taggings, dependent: :destroy
+    has_many :tags, through: :taggings
+    # 👆🏻If the name of the association (i.e. tags) is the same as 
+    # the source singularized(i.e. tag) then 'source' named argument can be omitted
+
+
     # has_and_belongs_to_many(
     #     :likes,
     #     {
@@ -68,7 +74,7 @@ class Question < ApplicationRecord
             .select("questions.*","Count(answers.*) AS answers_count")
             .group('questions.id')
     end
-
+    
     private
     def capitalize_title
         self.title.capitalize!

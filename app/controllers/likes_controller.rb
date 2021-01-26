@@ -25,3 +25,6 @@ class LikesController < ApplicationController
         redirect_to question_path(like.question)
     end
 end
+
+@like
+like
