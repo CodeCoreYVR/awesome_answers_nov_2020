@@ -77,7 +77,7 @@ class QuestionsController < ApplicationController
         @question=Question.find params[:id] 
     end
     def question_params
-        params.require(:question).permit(:title, :body, tag_ids:[])
+        params.require(:question).permit(:title, :body, :tag_names)
     # permit specifies all the input names that are allowes as symbol
     end
     def authorize_user!
