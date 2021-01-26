@@ -1,6 +1,9 @@
 <h3><%=@question.title%></h3>
 <p><%= @question.body %></p>
 <div>
+    Tags : <%= @question.tags.map(&:name).join(', ')  %> 
+</div>
+<div>
     Created by: <%= @question.user&.full_name || "DELETED" %>
 </div>
 <div>

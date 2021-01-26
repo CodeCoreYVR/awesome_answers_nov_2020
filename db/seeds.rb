@@ -5,9 +5,17 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Like.delete_all
+Tagging.delete_all
+Tag.delete_all
 User.delete_all
 Answer.delete_all
 Question.delete_all
+
+NUM_QUESTIONS=200
+NUM_USER=10
+NUM_TAGS=20
+
 
 PASSWORD='supersecret'
 super_user= User.create(
@@ -18,7 +26,7 @@ super_user= User.create(
     is_admin: true
 )
 # Kayleen Breitenberg
-10.times do
+NUM_USER.times do
 first_name= Faker::Name.first_name 
 last_name= Faker::Name.last_name 
 User.create(
@@ -30,7 +38,14 @@ User.create(
 end
 users=User.all
 
-200.times do
+NUM_TAGS.times do 
+    Tag.create(
+        name:Faker::Vehicle.make
+    )
+end
+tags=Tag.all
+
+NUM_QUESTIONS.times do
      created_at=Faker::Date.backward(days: 365*5)
     q=Question.create(
         title: Faker::Hacker.say_something_smart,
@@ -47,15 +62,19 @@ users=User.all
                 body: Faker::GreekPhilosophers.quote, 
                 user: users.sample )
         end
+        q.likers=users.shuffle.slice(0,rand(users.count))
+        q.tags= tags.shuffle.slice(0,rand(tags.count))
     end
 end
 
 question=Question.all
 answer=Answer.all
 
-puts Cowsay.say("Generated #{question.count} questions.",:frogs)
+puts Cowsay.say("Generated #{Question.count} questions.",:frogs)
 puts Cowsay.say("Generated #{answer.count} answers.",:tux)
-puts Cowsay.say("Generated #{users.count} answers.",:beavis)
+puts Cowsay.say("Generated #{users.count} users.",:beavis)
+puts Cowsay.say("Generated #{Like.count} likes.",:bunny)
+puts Cowsay.say("Generated #{tags.count} tags.",:sheep)
 puts Cowsay.say("Login with  #{super_user.email} and password:#{PASSWORD}.",:koala)
 
 
