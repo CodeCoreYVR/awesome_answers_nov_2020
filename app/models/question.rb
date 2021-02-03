@@ -13,7 +13,7 @@ class Question < ApplicationRecord
     belongs_to :user, optional: true
 
     # many to many association
-    has_many :likes
+    has_many :likes, dependent: :destroy
     has_many :likers, through: :likes  , source: :user
     # has_many :likes, through: :likes # , source: :user
 
