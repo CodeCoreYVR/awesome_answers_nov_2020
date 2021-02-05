@@ -51,9 +51,12 @@ class QuestionsController < ApplicationController
         # 1a Route to take to the form
         # 1b Form itself
     # 2. Storing the values
+    # GET /questions/new
     def new
         @question=Question.new
     end
+
+    # POST /questions
     def create
         @question=Question.new question_params
         @question.user = current_user
