@@ -55,6 +55,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :questions, only:[:index, :show, :update, :create, :destroy]
       resource :session, only: [:create, :destroy]
+      get('/current_user', to: 'sessions#get_current_user')
     end
     # namespace :v2 do
     #   resources :questions
