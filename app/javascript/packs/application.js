@@ -11,6 +11,9 @@ Rails.start()
 ActiveStorage.start()
 
 import './selectize'
+// import 'underscore';
+// import Gmaps from './gmaps_google';
+// rails g gmaps4rails:copy_js
 
 window.jQuery=$;
 window.$=$;

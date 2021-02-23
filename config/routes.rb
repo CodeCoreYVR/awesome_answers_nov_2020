@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     # /questions/:question_id/answers/:id/edit 
   end
 
-  resources :users, only:[:new, :create]
+  resources :users, only:[:new, :create, :show]
   resource :session, only:[:new, :create, :destroy]
   # resource is singular instead of resources
   # Unlike resources, resource will create routes that do CRUD operations only on one thing. 
