@@ -7,6 +7,10 @@ class User < ApplicationRecord
     has_many :likes
     has_many :liked_questions, through: :likes, source: :question
 
+    geocoded_by :address
+
+    after_validation :geocode
+
 
     # has_and_belongs_to_many(
     #     :liked_questions, # This is a name of association
